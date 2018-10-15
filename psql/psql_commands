@@ -1,0 +1,4 @@
+#copy a table out of a database.
+psql -c "\copy (column_1, column_2, column_n from table) to /your/path/to/where/csv/will/live.csv with (format csv, header true, null '')" --host <server> --dbname <dbname> --username <username>
+#put that table into another database.
+psql -c "\copy name_of_table from '/your/path/to/where/csv/will/live.csv'  csv header;" -h <server> -d <database name> -U <username>
