@@ -1,0 +1,79 @@
+// generates some base CSS classes defined by the `colors-map`
+// inluces font, backgound colors, background grandients and button colors
+$color-map: (
+  blue: #2F86E9,
+  green: #00cc66,
+  gold: #ffd700,
+  disabled: #e3e3e3,
+  white: #ffffff,
+  black: #000000
+);
+
+%button {
+  font: 13px arial;
+  text-decoration: none;
+  font-weight:bold;
+  text-align: center;
+  padding: 3px 15px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+@mixin build-backgrounds($name, $type, $color-1, $color-2) {
+  .#{$name}-bg#{$type} {
+    background-color: $color-1;
+
+    &.gradient {
+      background: linear-gradient(to bottom, $color-1 0%, $color-2 97%);
+      &.reverse {
+        background: linear-gradient(to bottom, $color-2 0%, $color-1 97%);
+      }
+    }
+  }
+}
+
+@mixin build-fonts($name, $type, $color, $color-dark, $color-light) {
+  .#{$name}-ft#{$type} {
+    color: $color;
+  }
+  a.#{$name}-ft#{$type} {
+    color: $color;
+    &:visited, &:link {
+      color: $color;
+    }
+    &:hover {
+      color: $color-dark
+    }
+    &:active {
+      color: $color-light
+    }
+  }
+}
+
+@each $name, $color in $color-map {
+  $color-light: lighten($color, 10%);
+  $color-light-2: lighten($color, 20%);
+  $color-dark: darken($color, 5%);
+  $color-dark-2: darken($color, 15%);
+
+  @include build-fonts($name, '', $color, $color-dark, $color-light);
+  @include build-fonts($name, '.lighten', $color-light, $color, $color-light-2);
+  @include build-fonts($name, '.darken', $color-dark, $color-dark, $color-light);
+
+  @include build-backgrounds($name, '', $color, $color-dark);
+  @include build-backgrounds($name, '.lighten-1', $color, $color-light);
+  @include build-backgrounds($name, '.lighten-2', $color, $color-light-2);
+  @include build-backgrounds($name, '.darken', $color, $color-dark);
+  @include build-backgrounds($name, '.darken-2', $color, $color-dark-2);
+
+  button.#{$name}, a.#{$name} {
+    @extend %button;
+    background-color: $color;
+    border: 1px solid darken($color, 20%);
+
+    &:hover {
+      // pulled from .#{$name}-bg.darken
+      background-color: darken($color, 5%);
+    }
+  }
+}
