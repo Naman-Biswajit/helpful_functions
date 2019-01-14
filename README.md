@@ -1,7 +1,6 @@
 # helpful_functions
 Just some helpful functions that I have either created or come across that have helped through the years
 
-
 # Ethereum Address
 If you would like to see more, contribute or donate
 
