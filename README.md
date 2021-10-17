@@ -3,4 +3,4 @@ Just some helpful functions that I have either created or come across that have 
 
 
 # Notes:
-Please review all code before using in a production evironment
+Please review all code before using in a production environment
